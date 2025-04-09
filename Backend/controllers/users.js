@@ -8,7 +8,11 @@ dotenv.config();
 
 export const registerUser = async (req, res, next) => {
   try {
-    const newUser = await User.create(req.body);
+    const userData = {
+      ...req.body,
+      prifilepic: req.myFileName,
+    }
+    const newUser = await User.create(userData);
     const newToken = await VToken.create({
       userId: newUser._id,
       token: Date.now() + "_" + newUser._id,
